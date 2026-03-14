@@ -78,5 +78,12 @@ admin
 root
 msfadmin
 
-![Arquivos user.txt e password.txt](images/wordlists.png)
+123456
+password
+admin
+root
+msfadmin
+
+![Arquiv
+os user.txt e password.txt](images/wordlists.png)
 
