@@ -43,3 +43,37 @@ Para garantir que as máquinas se comuniquem apenas entre si, criando um ambient
 4. Por fim, nas configurações de hardware de ambas as VMs (Kali Linux e Metasploitable 2), as interfaces de rede foram editadas para apontarem para a rede virtual recém-criada (`lab-pentest`).
 
 ![Configuração de Rede no Virt-Manager](images/config-rede.png)
+
+## Fase 2: Planeamento e Criação de Wordlists
+
+Para a execução dos ataques de força bruta, foi necessário criar dicionários (wordlists) contendo possíveis nomes de utilizadores e senhas. 
+
+Num cenário de auditoria real, seriam utilizadas listas extensas. No entanto, para fins didáticos e para otimizar o tempo de execução neste ambiente controlado, foram criadas wordlists personalizadas e focadas, contendo credenciais padrão conhecidas de sistemas vulneráveis (como o `msfadmin` do Metasploitable) misturadas com senhas fracas comuns.
+
+Os ficheiros foram criados no Kali Linux utilizando os seguintes comandos de terminal:
+
+# Criação do diretório de trabalho
+mkdir lab-medusa
+cd lab-medusa
+
+# Criação da wordlist de utilizadores
+nano users.txt
+
+# Criação da wordlist de senhas
+nano passwords.txt
+
+Conteúdo do ficheiro user.txt:
+root
+admin
+user
+msfadmin
+test
+
+Conteúdo do ficheiro password.txt:
+123456
+password
+admin
+root
+msfadmin
+
+
