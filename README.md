@@ -71,7 +71,8 @@ test
 nano password.txt
 
 ### Conteúdo do ficheiro password.txt:
-
+```text
+123456
 123456
 password
 admin
