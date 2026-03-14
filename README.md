@@ -57,10 +57,10 @@ mkdir lab-medusa
 cd lab-medusa
 
 # Criação da wordlist de utilizadores
-nano users.txt
+nano user.txt
 
 # Criação da wordlist de senhas
-nano passwords.txt
+nano password.txt
 
 Conteúdo do ficheiro user.txt:
 root
@@ -76,4 +76,5 @@ admin
 root
 msfadmin
 
+![Arquivos user.txt e password.txt](images/wordlists.png)
 
