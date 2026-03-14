@@ -69,7 +69,7 @@ test
 # Criação da wordlist de senhas
 nano password.txt
 
-# Conteúdo do ficheiro password.txt:
+### Conteúdo do ficheiro password.txt:
 123456
 password
 admin
