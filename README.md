@@ -1,19 +1,20 @@
-# Auditoria de Segurança: Ataques de Força Bruta
+# Auditoria de Segurança: Simulação de Ataques de Força Bruta
 
 ## Objetivo
-Este projeto documenta simulações práticas de ataques de força bruta contra serviços vulneráveis, utilizando o Kali Linux e ferramentas para ataque de força bruta, com foco na compreensão dos vetores de ataque e na proposição de medidas de mitigação.
+Este projeto documenta simulações práticas de ataques de força bruta contra serviços vulneráveis (como FTP, Web e SMB). Utilizando o sistema Kali Linux e ferramentas especializadas em testes de intrusão, o laboratório tem como foco a compreensão dos vetores de ataque, a adaptação frente a limitações de software e a proposição de medidas de mitigação eficazes.
 
 ## Fase 1: Preparação do Ambiente
 
 Para este laboratório, o ambiente foi virtualizado utilizando o **virt-manager/KVM**, em vez da proposta inicial de utilizar o Virtualbox.
+
 ### Importação do Metasploitable 2
 
 Como o Metasploitable 2 não é distribuído nativamente para o virt-manager, foi necessário converter o disco virtual original (VMDK) para o formato `.qcow2`. Para converter arquivos VMDK para QCOW2 no Linux, utiliza-se a ferramenta `qemu-img`, que é parte do pacote `qemu-utils`.
 
 Sendo o Linux Mint um sistema baseado em Debian/Ubuntu, a instalação do pacote necessário é feita com o comando:
-
+```text
 sudo apt-get install qemu-utils
-
+```
 (Nota: Em sistemas baseados em RHEL/Fedora, utiliza-se sudo yum install qemu-utils)
 Após a instalação, a conversão foi executada com o seguinte comando:
 
