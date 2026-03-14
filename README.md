@@ -57,7 +57,7 @@ Os ficheiros foram criados no Kali Linux utilizando os seguintes comandos de ter
 mkdir lab-medusa
 cd lab-medusa
 ```
-# Criação da wordlist de utilizadores
+# Criação da wordlist de usuários
 ```text
 nano user.txt
 ```
