@@ -53,12 +53,14 @@ Num cenário de auditoria real, seriam utilizadas listas extensas. No entanto, p
 Os ficheiros foram criados no Kali Linux utilizando os seguintes comandos de terminal:
 
 # Criação do diretório de trabalho
+```text
 mkdir lab-medusa
 cd lab-medusa
-
+```
 # Criação da wordlist de utilizadores
+```text
 nano user.txt
-
+```
 ### Conteúdo do ficheiro user.txt:
 ```text
 root
@@ -68,8 +70,9 @@ msfadmin
 test
 ```
 # Criação da wordlist de senhas
+```text
 nano password.txt
-
+```
 ### Conteúdo do ficheiro password.txt:
 ```text
 123456
