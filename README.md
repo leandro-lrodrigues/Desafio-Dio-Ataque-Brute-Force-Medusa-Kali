@@ -5,15 +5,41 @@ Este projeto documenta simulações práticas de ataques de força bruta contra 
 
 ## Fase 1: Preparação do Ambiente
 
-Para este laboratório, o ambiente foi virtualizado utilizando o **virt-manager/KVM**, adaptando a proposta inicial.
-
+Para este laboratório, o ambiente foi virtualizado utilizando o **virt-manager/KVM**, em vez da proposta inicial de utilizar o Virtualbox.
 ### Importação do Metasploitable 2
-Como o Metasploitable 2 não é distribuído nativamente para o virt-manager, foi necessário converter o disco virtual original para o formato `.qcow2`. 
-O processo de conversão foi realizado da seguinte forma:
 
-(Leandro, descreva aqui com suas palavras e insira o comando exato que você usou no terminal, colocando-o entre três crases ``` para formatar como bloco de código).
+Como o Metasploitable 2 não é distribuído nativamente para o virt-manager, foi necessário converter o disco virtual original (VMDK) para o formato `.qcow2`. Para converter arquivos VMDK para QCOW2 no Linux, utiliza-se a ferramenta `qemu-img`, que é parte do pacote `qemu-utils`.
 
-### Configuração das Placas de Rede
-Para garantir que as máquinas se comuniquem apenas entre si, criando um ambiente controlado e seguro para os testes, a rede foi configurada da seguinte maneira:
+Sendo o Linux Mint um sistema baseado em Debian/Ubuntu, a instalação do pacote necessário é feita com o comando:
 
-(Leandro, explique aqui como você configurou a rede virtual no virt-manager para isolar o Kali Linux e o Metasploitable 2).
+sudo apt-get install qemu-utils
+
+(Nota: Em sistemas baseados em RHEL/Fedora, utiliza-se sudo yum install qemu-utils)
+Após a instalação, a conversão foi executada com o seguinte comando:
+
+qemu-img convert -p -f vmdk -O qcow2 arquivo_original.vmdk arquivo_convertido.qcow2
+
+Parâmetros utilizados:
+
+-p: Mostra o progresso da conversão.
+-f vmdk: Indica que o formato de entrada é VMDK.
+-O qcow2: Define o formato de saída como QCOW2.
+arquivo_original.vmdk: Caminho para o arquivo VMDK de origem.
+arquivo_convertido.qcow2: Nome do arquivo QCOW2 gerado.
+
+### Configuração das Placas de Rede (Ambiente Isolado)
+
+Para garantir que as máquinas se comuniquem apenas entre si, criando um ambiente controlado e seguro para os testes, a rede virtual foi configurada no **virt-manager** seguindo os passos abaixo:
+
+1. No menu principal, acessou-se **Editar > Detalhes da Conexão**.
+2. Na aba **Redes Virtuais**, uma nova rede foi criada (clicando no botão **+**).
+3. **Parâmetros da nova rede:**
+   * **Nome da rede:** `lab-pentest`
+   * **Modo:** Isolado
+   * **Configuração IPv4:** Habilitar IPv4
+   * **Endereço da rede:** `192.168.100.0/24`
+   * **DHCPv4:** Habilitado
+   * **Range DHCP (Início - Fim):** `192.168.100.128` a `192.168.100.144`
+4. Por fim, nas configurações de hardware de ambas as VMs (Kali Linux e Metasploitable 2), as interfaces de rede foram editadas para apontarem para a rede virtual recém-criada (`lab-pentest`).
+
+![Configuração de Rede no Virt-Manager](images/config-rede.png)
