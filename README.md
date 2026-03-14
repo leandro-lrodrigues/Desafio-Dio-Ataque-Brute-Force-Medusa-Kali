@@ -60,13 +60,13 @@ cd lab-medusa
 nano user.txt
 
 ### Conteúdo do ficheiro user.txt:
-
+```text
 root
 admin
 user
 msfadmin
 test
-
+```
 # Criação da wordlist de senhas
 nano password.txt
 
@@ -78,13 +78,8 @@ password
 admin
 root
 msfadmin
+```
 
-123456
-password
-admin
-root
-msfadmin
+![Arquivos user.txt e password.txt](images/wordlists.png)
 
-![Arquiv
-os user.txt e password.txt](images/wordlists.png)
 
