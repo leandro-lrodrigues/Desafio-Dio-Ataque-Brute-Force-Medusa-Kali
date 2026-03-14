@@ -1,7 +1,7 @@
-# Auditoria de Segurança: Ataques de Força Bruta com Medusa
+# Auditoria de Segurança: Ataques de Força Bruta
 
 ## Objetivo
-Este projeto documenta simulações práticas de ataques de força bruta contra serviços vulneráveis, utilizando o Kali Linux e a ferramenta Medusa, com foco na compreensão dos vetores de ataque e na proposição de medidas de mitigação.
+Este projeto documenta simulações práticas de ataques de força bruta contra serviços vulneráveis, utilizando o Kali Linux e ferramentas para ataque de força bruta, com foco na compreensão dos vetores de ataque e na proposição de medidas de mitigação.
 
 ## Fase 1: Preparação do Ambiente
 
@@ -85,4 +85,60 @@ msfadmin
 
 ![Arquivos user.txt e password.txt](images/wordlists.png)
 
+## Fase 3: Execução dos Ataques com Medusa
 
+O Medusa é uma ferramenta modular e célere para ataques de força bruta em paralelo. Nesta fase, foram explorados diferentes serviços do ambiente vulnerável.
+
+### 3.1. Ataque de Força Bruta ao Serviço FTP
+
+O primeiro vetor de ataque foi o serviço FTP (File Transfer Protocol). Utilizando as wordlists criadas na fase anterior, o ataque foi lançado contra o Metasploitable 2.
+
+**Comando executado:**
+
+```bash
+medusa -h 192.168.100.x -U user.txt -P password.txt -M ftp
+```
+Descrição dos parâmetros:
+
+-h: Especifica o host (endereço IP do alvo).
+-U: Indica o ficheiro com a lista de utilizadores.
+-P: Indica o ficheiro com a lista de palavras-passe.
+-M ftp: Define o módulo a ser utilizado pelo Medusa.
+
+Evidência de Sucesso:
+A ferramenta iterou sobre os dicionários até encontrar as credenciais válidas, assinalando o sucesso (SUCCESS) na saída do terminal, conforme ilustrado abaixo:
+
+![Ataque Força Bruta FTP - Medusa](images/medusa-ftp.png)
+
+### 3.2. Ataque a Formulário Web (DVWA) e Adaptação de Ferramenta
+
+O segundo vetor de ataque focou-se num formulário web utilizando a aplicação Damn Vulnerable Web App (DVWA), que vem embutida no Metasploitable 2.
+
+**Desafio Encontrado com o Medusa:**
+A tentativa inicial de utilizar o módulo `web-form` do Medusa resultou num erro `302 (Redirect)`.
+
+```bash
+# Comando inicial (que resultou em erro 302)
+medusa -h 192.168.100.130 -U user.txt -P password.txt -M web-form -m FORM:"/dvwa/login.php" -m FORM-DATA:"post?username=&password=&Login=Login" -m DENY-SIGNAL:"Login failed"
+```
+O DVWA redireciona a página em vez de devolver um erro estático de imediato. Como o módulo web do Medusa é antigo, ele aborta a tentativa ao deparar-se com um código 302, mesmo após a injeção do cookie de sessão (PHPSESSID).
+
+A Adaptação: Pivotando para o Hydra
+Uma competência essencial numa auditoria de segurança é a capacidade de adaptação. Face à limitação do Medusa com redirecionamentos HTTP, a estratégia foi ajustada para utilizar o THC Hydra, uma ferramenta padrão da indústria, mais robusta para lidar com aplicações web modernas.
+
+Para o ataque ser bem-sucedido, foi necessário extrair previamente o cookie de sessão (PHPSESSID) do navegador.
+
+Comando executado com o Hydra:
+```text
+hydra -L user.txt -P password.txt 192.168.100.130 http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^&Login=Login:H=Cookie\: PHPSESSID=7d8904aea6016b156bc90fcff6e89590; security=low:F=Login failed" -V
+```
+Descrição dos parâmetros:
+
+-L e -P: Define os ficheiros com as listas de utilizadores e senhas.
+http-post-form: O módulo que lida com formulários e redirecionamentos.
+H=Cookie\:: Injeta o cookie de sessão válido.
+F=Login failed: Indica a string de falha.
+-V: Modo Verbose para visualizar as tentativas.
+
+Abaixo encontra-se a evidência da execução do Hydra, demonstrando a interação com o servidor e as tentativas de login:
+![Ataque Força Bruta WEB - Hydra](images/hydra-dvwa.png)
