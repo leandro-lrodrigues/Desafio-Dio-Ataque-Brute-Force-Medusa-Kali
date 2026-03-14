@@ -59,17 +59,17 @@ cd lab-medusa
 # Criação da wordlist de utilizadores
 nano user.txt
 
-# Criação da wordlist de senhas
-nano password.txt
-
-Conteúdo do ficheiro user.txt:
+# Conteúdo do ficheiro user.txt:
 root
 admin
 user
 msfadmin
 test
 
-Conteúdo do ficheiro password.txt:
+# Criação da wordlist de senhas
+nano password.txt
+
+# Conteúdo do ficheiro password.txt:
 123456
 password
 admin
