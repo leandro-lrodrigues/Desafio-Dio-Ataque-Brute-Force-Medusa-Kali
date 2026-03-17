@@ -166,3 +166,18 @@ Evidência de Sucesso:
 A ferramenta iterou a senha fornecida através da lista de usuários, identificando o acesso válido para a conta msfadmin, conforme a saída do terminal:
 ![Ataque Força Bruta SMB - Hydra](images/medusa-smb.png)
 
+## Fase 5: Medidas de Mitigação
+
+A exploração bem-sucedida dos serviços FTP, Web e SMB evidencia a criticidade de políticas de controle de acesso rigorosas. Para mitigar os riscos associados a ataques de Força Bruta e *Password Spraying*, recomendam-se as seguintes ações defensivas:
+
+* **Implementação de Políticas de Senhas Fortes:** Exigir senhas longas (entre 12 e 16 caracteres) e complexas, além de proibir o uso de senhas comuns ou que contenham dados pessoais do utilizador.
+* **Bloqueio de Conta (Account Lockout) e Rate Limiting:** Configurar o bloqueio automático da conta após um número específico de tentativas falhas consecutivas (ex: 5 tentativas). Para serviços web, implementar *Rate Limiting* (limite de requisições por IP) e o uso de CAPTCHAs em formulários de autenticação.
+* **Autenticação Multifator (MFA):** Exigir um segundo fator de autenticação (como um token de aplicativo ou SMS) para o acesso a serviços críticos, neutralizando o ataque mesmo que a senha seja comprometida.
+* **Desativação de Serviços e Protocolos Inseguros:** Substituir protocolos que transmitem dados em texto claro (como FTP ou Telnet) por alternativas seguras com criptografia (como SFTP ou SSH).
+* **Monitorização e Alertas de Logins Anômalos:** Implementar soluções de SIEM (Security Information and Event Management) para detetar padrões anómalos, como tentativas de login no mesmo utilizador a partir de vários IPs (Força Bruta) ou uma única tentativa de login em dezenas de utilizadores simultaneamente a partir da mesma origem (*Password Spraying*).
+* **Restrição de Acesso à Rede:** Limitar o acesso a serviços internos (como o SMB) utilizando Firewalls e VPNs, garantindo que não fiquem expostos diretamente à internet.
+
+---
+
+## Conclusão
+Este laboratório prático evidenciou a eficácia de ataques de dicionário e pulverização de senhas contra serviços mal configurados. A experiência também destacou a importância da adaptação técnica do auditor de segurança face a limitações de ferramentas e comportamentos de aplicações web modernas (como os redirecionamentos HTTP 302). A implementação de uma arquitetura de defesa em profundidade, aliada ao monitoramento contínuo, é essencial para proteger os ativos organizacionais contra este tipo de ameaça.
