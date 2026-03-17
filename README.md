@@ -143,3 +143,26 @@ F=Login failed: Indica a string de falha.
 
 Abaixo encontra-se a evidência da execução do Hydra, demonstrando a interação com o servidor e as tentativas de login:
 ![Ataque Força Bruta WEB - Hydra](images/hydra-dvwa.png)
+
+### 3.3. Password Spraying no Serviço SMB
+
+Diferente de um ataque de força bruta tradicional, a técnica de *Password Spraying* (Pulverização de Senhas) consiste em testar uma única senha comum contra múltiplos usuários. Esta abordagem é frequentemente utilizada por atacantes em ambientes corporativos para evitar o acionamento de políticas de bloqueio de conta (*Account Lockout*).
+
+Neste vetor, o alvo foi o serviço SMB (Server Message Block), utilizando a senha `msfadmin` contra a lista de usuários criada na Fase 2.
+
+**Comando executado:**
+```bash
+medusa -h 192.168.100.130 -U user.txt -p msfadmin -M smbnt
+```
+Descrição dos parâmetros:
+
+-U: Indica o arquivo com a lista de usuários a serem testados.
+
+-p: Define uma única senha, em texto claro, para ser testada contra todos os usuários do dicionário.
+
+-M smbnt: Define o módulo da ferramenta para o protocolo SMB.
+
+Evidência de Sucesso:
+A ferramenta iterou a senha fornecida através da lista de usuários, identificando o acesso válido para a conta msfadmin, conforme a saída do terminal:
+![Ataque Força Bruta SMB - Hydra](images/medusa-smb.png)
+
